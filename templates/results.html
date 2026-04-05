@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - {{ query }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Search Results for "{{ query }}"</h1>
+        <a href="/">Back to Search</a>
+    </header>
+    <main>
+        <form action="/compare" method="post" id="compare-form">
+            <button type="submit">Compare Selected</button>
+            <ul class="product-list">
+                {% for product in products %}
+                <li class="product">
+                    <input type="checkbox" name="product_ids" value="{{ product.id }}">
+                    <h3>{{ product.name }}</h3>
+                    <p>Price: ₹{{ "%.2f"|format(product.price) }}</p>
+                    <p>Rating: {{ "%.1f"|format(product.rating) }}/5</p>
+                    <p>Eco Score: {{ "%.1f"|format(product.eco_score) }}/100</p>
+                    <p>Safety Score: {{ "%.1f"|format(product.safety_score) }}/100</p>
+                    <p>Unified Score: {{ "%.1f"|format(product.unified_score) }}/100</p>
+                    <details>
+                        <summary>Reviews</summary>
+                        <ul>
+                            {% for review in product.reviews %}
+                            <li>{{ review }}</li>
+                            {% endfor %}
+                        </ul>
+                    </details>
+                    <details>
+                        <summary>Ingredients</summary>
+                        <ul>
+                            {% for ing in product.ingredients %}
+                            <li>{{ ing }}</li>
+                            {% endfor %}
+                        </ul>
+                    </details>
+                </li>
+                {% endfor %}
+            </ul>
+        </form>
+    </main>
+</body>
+</html>

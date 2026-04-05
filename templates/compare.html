@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Comparison</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Product Comparison</h1>
+        <a href="/">Back to Search</a>
+    </header>
+    <main>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    {% for product in products %}
+                    <th>{{ product.name }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Price</td>
+                    {% for product in products %}
+                    <td>₹{{ "%.2f"|format(product.price) }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Rating</td>
+                    {% for product in products %}
+                    <td>{{ "%.1f"|format(product.rating) }}/5</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Eco Score</td>
+                    {% for product in products %}
+                    <td>{{ "%.1f"|format(product.eco_score) }}/100</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Safety Score</td>
+                    {% for product in products %}
+                    <td>{{ "%.1f"|format(product.safety_score) }}/100</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Unified Score</td>
+                    {% for product in products %}
+                    <td>{{ "%.1f"|format(product.unified_score) }}/100</td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
