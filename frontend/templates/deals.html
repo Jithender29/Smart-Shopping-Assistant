@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hot Deals - Smart Shopping Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>🔥 Hot Deals & Discounts</h1>
+        <p>Save big on thousands of products - Limited time offers!</p>
+        <div class="header-controls">
+            <a href="/" class="back-link">← Back Home</a>
+            <a href="/favorites" style="color: white; text-decoration: none; font-weight: 600;">❤️ My Favorites</a>
+            {% if session.get('username') %}
+            <span style="color: white; font-weight: 600;">👤 {{ session.get('username') }}</span>
+            <a href="/logout" style="color: white; text-decoration: none; font-weight: 600;">🚪 Logout</a>
+            {% else %}
+            <a href="/login" style="color: white; text-decoration: none; font-weight: 600;">🔐 Login</a>
+            {% endif %}
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="filter-sort-section">
+            <div>
+                <label for="sort-deals">Sort By</label>
+                <select id="sort-deals" onchange="sortDeals(this.value)" style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem;">
+                    <option value="discount">Highest Discount</option>
+                    <option value="savings">Most Savings</option>
+                    <option value="price">Lowest Price</option>
+                    <option value="rating">Best Rated</option>
+                </select>
+            </div>
+            <div>
+                <label for="category-filter">Category</label>
+                <select id="category-filter" onchange="filterDealsByCategory(this.value)" style="padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem;">
+                    <option value="">All Categories</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Personal Care">Personal Care</option>
+                    <option value="Home & Garden">Home & Garden</option>
+                    <option value="Food & Beverage">Food & Beverage</option>
+                    <option value="Fashion">Fashion</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="results-header">
+            <h2 class="results-count">📦 {{ deals|length }} amazing deals available!</h2>
+        </div>
+
+        <div class="product-grid">
+            {% for deal in deals %}
+            <div class="product" style="position: relative;">
+                <!-- Discount Badge -->
+                <div style="position: absolute; top: 10px; right: 10px; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 0.5rem 1rem; border-radius: 50px; font-weight: 700; z-index: 10; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);">
+                    -{{ deal.discount_percent }}% OFF
+                </div>
+
+                <!-- Stock Status Badge -->
+                <div style="position: absolute; top: 50px; right: 10px; background: {% if 'Limited' in deal.stock %}#f59e0b{% elif 'Low' in deal.stock %}#ef4444{% else %}#10b981{% endif %}; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; z-index: 10;">
+                    {{ deal.stock }}
+                </div>
+
+                <div class="product-header">
+                    <h3 class="product-title">{{ deal.name }}</h3>
+                </div>
+                
+                <div class="product-content">
+                    <!-- Original Price (Strikethrough) -->
+                    <p style="color: #9ca3af; text-decoration: line-through; margin: 0; font-size: 1rem;">₹{{ "%.2f"|format(deal.original_price) }}</p>
+                    
+                    <!-- Sale Price -->
+                    <p class="product-price" style="color: #ef4444; font-size: 1.8rem;">₹{{ "%.2f"|format(deal.discounted_price) }}</p>
+                    
+                    <!-- Savings Amount -->
+                    <div style="background: #d1fae5; color: #065f46; padding: 0.5rem 1rem; border-radius: 8px; text-align: center; font-weight: 600; margin: 0.5rem 0;">
+                        💰 Save ₹{{ "%.2f"|format(deal.savings) }}
+                    </div>
+                    
+                    <!-- Rating -->
+                    <p style="margin: 0.5rem 0; color: #f59e0b;">⭐ {{ deal.rating }}/5</p>
+                    
+                    <span class="badge badge-eco">{{ deal.category }}</span>
+                    
+                    <!-- Score -->
+                    <div class="score-container">
+                        <div class="score-row">
+                            <label class="score-label">Eco Score</label>
+                            <span class="score-value" style="color: #10b981;">{{ "%.1f"|format(deal.eco_score) }}/100</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill eco" style="width: {{ deal.eco_score }}%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Savings Breakdown -->
+                    <div style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 8px;">
+                        <table style="width: 100%; font-size: 0.9rem;">
+                            <tr>
+                                <td><strong>Original:</strong></td>
+                                <td style="text-align: right;">₹{{ "%.2f"|format(deal.original_price) }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Discount:</strong></td>
+                                <td style="text-align: right; color: #ef4444;">-{{ deal.discount_percent }}%</td>
+                            </tr>
+                            <tr style="border-top: 2px solid #e5e7eb;">
+                                <td><strong>Final Price:</strong></td>
+                                <td style="text-align: right; color: #10b981; font-weight: 700;">₹{{ "%.2f"|format(deal.discounted_price) }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="product-actions">
+                        <button style="flex: 1; background: linear-gradient(135deg, var(--primary-color) 0%, #1e40af 100%);">🛒 Add to Cart</button>
+                        <button style="flex: 1; background: #ef4444;" onclick="alert('Price drop alert set!')">🔔 Notify on Restock</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <script>
+        const allDeals = {{ deals | tojson }};
+        let currentDeals = allDeals;
+
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', body.classList.contains('dark-mode'));
+        }
+
+        function sortDeals(sortBy) {
+            let sorted = [...currentDeals];
+            if (sortBy === 'discount') {
+                sorted.sort((a, b) => b.discount_percent - a.discount_percent);
+            } else if (sortBy === 'savings') {
+                sorted.sort((a, b) => b.savings - a.savings);
+            } else if (sortBy === 'price') {
+                sorted.sort((a, b) => a.discounted_price - b.discounted_price);
+            } else if (sortBy === 'rating') {
+                sorted.sort((a, b) => b.rating - a.rating);
+            }
+            updateDisplay(sorted);
+        }
+
+        function filterDealsByCategory(category) {
+            if (!category) {
+                updateDisplay(allDeals);
+            } else {
+                const filtered = allDeals.filter(d => d.category === category);
+                updateDisplay(filtered);
+            }
+        }
+
+        function updateDisplay(deals) {
+            currentDeals = deals;
+            const grid = document.querySelector('.product-grid');
+            grid.innerHTML = '';
+            
+            deals.forEach(deal => {
+                const dealHTML = `
+                    <div class="product" style="position: relative;">
+                        <div style="position: absolute; top: 10px; right: 10px; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 0.5rem 1rem; border-radius: 50px; font-weight: 700; z-index: 10;">
+                            -${deal.discount_percent}% OFF
+                        </div>
+                        <div class="product-header">
+                            <h3 class="product-title">${deal.name}</h3>
+                        </div>
+                        <div class="product-content">
+                            <p style="color: #9ca3af; text-decoration: line-through; margin: 0;">₹${deal.original_price.toFixed(2)}</p>
+                            <p class="product-price" style="color: #ef4444; font-size: 1.8rem;">₹${deal.discounted_price.toFixed(2)}</p>
+                            <div style="background: #d1fae5; color: #065f46; padding: 0.5rem 1rem; border-radius: 8px; text-align: center; font-weight: 600; margin: 0.5rem 0;">
+                                💰 Save ₹${deal.savings.toFixed(2)}
+                            </div>
+                            <span class="badge badge-eco">${deal.category}</span>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += dealHTML;
+            });
+        }
+
+        // Load dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</body>
+</html>
