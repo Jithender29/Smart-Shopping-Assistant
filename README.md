@@ -13,8 +13,8 @@ A web application tailored for the Indian market that provides unbiased product 
 ## Installation
 
 1. Install Python 3.8+
-2. Install dependencies: `pip install -r requirements.txt`
-3. Run the application: `python app.py`
+2. Install dependencies: `pip install -r backend/requirements.txt`
+3. Run the application: `python backend/app.py`
 4. Open http://localhost:5000 in your browser
 
 Note: The app runs in development mode. For production, use a WSGI server like Gunicorn.
@@ -28,10 +28,12 @@ Note: The app runs in development mode. For production, use a WSGI server like G
 
 ## Project Structure
 
-- `app.py`: Main Flask application
-- `templates/`: HTML templates
-- `static/`: CSS and static files
-- `requirements.txt`: Python dependencies
+- `backend/app.py`: Main Flask application
+- `backend/requirements.txt`: Python dependencies
+- `backend/instance/`: Flask instance files
+- `frontend/templates/`: HTML templates for Flask UI
+- `frontend/static/`: CSS and static files for Flask UI
+- `frontend/src/`: React frontend source code
 
 ## SRS Compliance
 

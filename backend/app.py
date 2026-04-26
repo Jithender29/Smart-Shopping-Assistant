@@ -9,7 +9,11 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 import functools
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder='../frontend/templates',
+    static_folder='../frontend/static'
+)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'your_secret_key_here_change_in_production'
@@ -125,10 +129,9 @@ def generate_random_reviews():
     return reviews
 
 # Mock data for demonstration
-def generate_mock_products(query, product_ids=None):
+def generate_mock_products(query, product_ids=None, num_products=10):
     categories = ['Electronics', 'Personal Care', 'Home & Garden', 'Food & Beverage', 'Fashion']
     products = []
-    num_products = 10
     
     for i in range(num_products):
         ingredients = ["Water", "Natural Extracts", "Preservatives", "Essential Oils", "Organic Components"]
@@ -476,18 +479,20 @@ def search():
 
 @app.route('/compare', methods=['POST'])
 def compare():
-    ids = request.form.getlist('product_ids')
+    raw_ids = request.form.getlist('product_ids')
+    try:
+        ids = sorted({int(product_id) for product_id in raw_ids})
+    except ValueError:
+        ids = []
+
     if len(ids) < 2:
-        return jsonify({'error': 'Select at least 2 products'})
-    
-    # Convert to integers
-    ids = [int(id) for id in ids]
+        return render_template('compare.html', products=[])
     
     # Get the query from form to generate products with same context
     query = request.form.get('query', 'Product')
     
     # Generate products for comparison with proper IDs
-    products = generate_mock_products(query, product_ids=ids)
+    products = generate_mock_products(query, product_ids=ids, num_products=len(ids))
     
     # Calculate unified scores
     for p in products:
