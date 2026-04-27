@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature Upcoming Display</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Feature Upcoming Display</h1>
+        <p>This feature is currently under development.</p>
+    </header>
+
+    <main style="max-width: 800px; margin: 2rem auto; padding: 1rem; text-align: center;">
+        <div style="background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+            <h2>{{ product_name }}</h2>
+            <p>Detailed product view for this item is coming soon.</p>
+            <a href="/" class="back-link">← Back to Search</a>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,881 @@
+[
+  {
+    "id": 1,
+    "name": "Smart Noise-Canceling Headphones",
+    "category": "Electronics",
+    "overall_score": 88.4,
+    "rating": 4.5,
+    "eco_score": 74.0,
+    "safety_score": 91.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Sound quality is crisp and the battery backup lasts all day."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Very comfortable for long study sessions and calls."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Noise cancellation is strong for this price range."
+      }
+    ],
+    "ingredients": [
+      "ABS Plastic",
+      "Aluminum Frame",
+      "Lithium-Ion Battery",
+      "Protein Leather Ear Cushions"
+    ],
+    "image": "https://source.unsplash.com/640x640/?headphones,electronics",
+    "product_link": "/feature-upcoming-display?product=Smart%20Noise-Canceling%20Headphones"
+  },
+  {
+    "id": 2,
+    "name": "Activated Charcoal Facewash",
+    "category": "Personal Care",
+    "overall_score": 86.9,
+    "rating": 4.4,
+    "eco_score": 81.0,
+    "safety_score": 89.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Feels gentle on skin and removes oil without dryness."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Good daily cleanser with a mild fragrance."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Visible freshness after one week of regular use."
+      }
+    ],
+    "ingredients": [
+      "Activated Charcoal",
+      "Aqua",
+      "Glycerin",
+      "Cocamidopropyl Betaine",
+      "Tea Tree Extract"
+    ],
+    "image": "https://source.unsplash.com/640x640/?charcoal,facewash,skincare",
+    "product_link": "/feature-upcoming-display?product=Activated%20Charcoal%20Facewash"
+  },
+  {
+    "id": 3,
+    "name": "Indoor Air Purifying Plant Kit",
+    "category": "Home & Garden",
+    "overall_score": 84.2,
+    "rating": 4.3,
+    "eco_score": 92.0,
+    "safety_score": 86.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Plants arrived healthy and improved room freshness."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Easy maintenance and good packaging for transport."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Great starter kit for apartment gardening."
+      }
+    ],
+    "ingredients": [
+      "Areca Palm",
+      "Snake Plant",
+      "Organic Potting Mix",
+      "Coco Peat",
+      "Biodegradable Planter"
+    ],
+    "image": "https://source.unsplash.com/640x640/?home,garden,plants",
+    "product_link": "/feature-upcoming-display?product=Indoor%20Air%20Purifying%20Plant%20Kit"
+  },
+  {
+    "id": 4,
+    "name": "Dark Chocolate Almond Bar Pack",
+    "category": "Food & Beverage",
+    "overall_score": 82.7,
+    "rating": 4.2,
+    "eco_score": 69.0,
+    "safety_score": 88.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Rich cocoa taste with balanced sweetness."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Almond crunch is fresh and satisfying."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Nice snack option with premium texture."
+      }
+    ],
+    "ingredients": [
+      "Cocoa Mass",
+      "Roasted Almonds",
+      "Cocoa Butter",
+      "Cane Sugar",
+      "Natural Vanilla"
+    ],
+    "image": "https://source.unsplash.com/640x640/?chocolate,food",
+    "product_link": "/feature-upcoming-display?product=Dark%20Chocolate%20Almond%20Bar%20Pack"
+  },
+  {
+    "id": 5,
+    "name": "Classic Cotton Casual Shirt",
+    "category": "Fashion",
+    "overall_score": 80.5,
+    "rating": 4.1,
+    "eco_score": 77.0,
+    "safety_score": 84.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Fabric feels breathable and stitching looks durable."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "True-to-size fit and comfortable for office wear."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Color holds well after multiple washes."
+      }
+    ],
+    "ingredients": [
+      "100% Cotton",
+      "Reactive Dye",
+      "Coconut Shell Buttons"
+    ],
+    "image": "https://source.unsplash.com/640x640/?fashion,shirt,cotton",
+    "product_link": "/feature-upcoming-display?product=Classic%20Cotton%20Casual%20Shirt"
+  },
+  {
+    "id": 6,
+    "name": "Organic Harvest Mixed Vegetable Basket",
+    "category": "Food & Beverage",
+    "overall_score": 87.1,
+    "rating": 4.6,
+    "eco_score": 90.0,
+    "safety_score": 88.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Fresh produce with a nice variety of seasonal vegetables."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Excellent quality and carefully packed for delivery."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Perfect for healthy home-cooked meals during the week."
+      }
+    ],
+    "ingredients": [
+      "Organic Spinach",
+      "Carrots",
+      "Tomatoes",
+      "Capsicum",
+      "Green Beans"
+    ],
+    "image": "https://source.unsplash.com/640x640/?organic,vegetables,food",
+    "product_link": "/feature-upcoming-display?product=Organic%20Harvest%20Mixed%20Vegetable%20Basket"
+  },
+  {
+    "id": 7,
+    "name": "Almond Oat Plant Milk",
+    "category": "Food & Beverage",
+    "overall_score": 85.4,
+    "rating": 4.4,
+    "eco_score": 84.0,
+    "safety_score": 87.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Creamy texture and works well in smoothies and coffee."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Light taste with no overpowering sweetness."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "A good dairy-free option for daily use."
+      }
+    ],
+    "ingredients": [
+      "Filtered Water",
+      "Almond Extract",
+      "Oat Extract",
+      "Calcium",
+      "Sea Salt"
+    ],
+    "image": "https://source.unsplash.com/640x640/?plant,milk,almond",
+    "product_link": "/feature-upcoming-display?product=Almond%20Oat%20Plant%20Milk"
+  },
+  {
+    "id": 8,
+    "name": "Whole Grain Millet Mix",
+    "category": "Food & Beverage",
+    "overall_score": 84.9,
+    "rating": 4.3,
+    "eco_score": 82.0,
+    "safety_score": 89.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Healthy staple for breakfast bowls and meal prep."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Nutty flavor and good texture after cooking."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "A wholesome alternative to regular grain mixes."
+      }
+    ],
+    "ingredients": [
+      "Brown Rice",
+      "Pearl Millet",
+      "Foxtail Millet",
+      "Rolled Oats",
+      "Amaranth"
+    ],
+    "image": "https://source.unsplash.com/640x640/?whole-grain,grains,healthy-food",
+    "product_link": "/feature-upcoming-display?product=Whole%20Grain%20Millet%20Mix"
+  },
+  {
+    "id": 9,
+    "name": "CrunchFit Protein Granola Bars",
+    "category": "Food & Beverage",
+    "overall_score": 83.8,
+    "rating": 4.2,
+    "eco_score": 72.0,
+    "safety_score": 86.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Good post-workout snack with balanced sweetness."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Keeps me full between classes and gym sessions."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Nice chewy texture and not overly processed."
+      }
+    ],
+    "ingredients": [
+      "Oats",
+      "Whey Protein",
+      "Peanut Butter",
+      "Honey",
+      "Chia Seeds"
+    ],
+    "image": "https://source.unsplash.com/640x640/?granola,protein-bar,snack",
+    "product_link": "/feature-upcoming-display?product=CrunchFit%20Protein%20Granola%20Bars"
+  },
+  {
+    "id": 10,
+    "name": "Cold Press Citrus Fusion Juice",
+    "category": "Food & Beverage",
+    "overall_score": 82.6,
+    "rating": 4.1,
+    "eco_score": 80.0,
+    "safety_score": 85.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Refreshing and tastes freshly squeezed."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Very natural flavor with no artificial aftertaste."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Great option for a quick morning energy boost."
+      }
+    ],
+    "ingredients": [
+      "Orange Juice",
+      "Carrot Juice",
+      "Lemon Juice",
+      "Ginger Extract"
+    ],
+    "image": "https://source.unsplash.com/640x640/?cold-pressed,juice,fruit",
+    "product_link": "/feature-upcoming-display?product=Cold%20Press%20Citrus%20Fusion%20Juice"
+  },
+  {
+    "id": 11,
+    "name": "Green Harmony Herbal Tea",
+    "category": "Food & Beverage",
+    "overall_score": 81.9,
+    "rating": 4.1,
+    "eco_score": 85.0,
+    "safety_score": 84.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Smooth taste and relaxing aroma in the evening."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Works well as a light daily tea without bitterness."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "A soothing blend with a clean finish."
+      }
+    ],
+    "ingredients": [
+      "Green Tea Leaves",
+      "Chamomile",
+      "Peppermint",
+      "Lemongrass"
+    ],
+    "image": "https://source.unsplash.com/640x640/?herbal-tea,green-tea",
+    "product_link": "/feature-upcoming-display?product=Green%20Harmony%20Herbal%20Tea"
+  },
+  {
+    "id": 12,
+    "name": "No Sugar Berry Sparkle Drink",
+    "category": "Food & Beverage",
+    "overall_score": 80.8,
+    "rating": 4.0,
+    "eco_score": 76.0,
+    "safety_score": 83.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Light, fizzy, and convenient as a low-calorie option."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Berry flavor is pleasant without being too sweet."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "A nice beverage for people avoiding added sugar."
+      }
+    ],
+    "ingredients": [
+      "Carbonated Water",
+      "Berry Extract",
+      "Natural Sweetener",
+      "Citric Acid"
+    ],
+    "image": "https://source.unsplash.com/640x640/?sugar-free,beverage,drink",
+    "product_link": "/feature-upcoming-display?product=No%20Sugar%20Berry%20Sparkle%20Drink"
+  },
+  {
+    "id": 13,
+    "name": "Clean Label Protein Cookies",
+    "category": "Food & Beverage",
+    "overall_score": 79.7,
+    "rating": 3.9,
+    "eco_score": 74.0,
+    "safety_score": 82.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Tastes homemade and works as a guilt-free snack."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Good ingredient list and decent protein content."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Soft texture with a balanced chocolate flavor."
+      }
+    ],
+    "ingredients": [
+      "Oat Flour",
+      "Pea Protein",
+      "Cocoa",
+      "Coconut Sugar",
+      "Almonds"
+    ],
+    "image": "https://source.unsplash.com/640x640/?protein-cookies,healthy-snack",
+    "product_link": "/feature-upcoming-display?product=Clean%20Label%20Protein%20Cookies"
+  },
+  {
+    "id": 14,
+    "name": "Botanical Face Cream",
+    "category": "Personal Care",
+    "overall_score": 88.2,
+    "rating": 4.5,
+    "eco_score": 86.0,
+    "safety_score": 90.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Hydrating without feeling greasy on the skin."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Works well under makeup and absorbs quickly."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Skin felt soft and calm after a few uses."
+      }
+    ],
+    "ingredients": [
+      "Aloe Vera",
+      "Shea Butter",
+      "Jojoba Oil",
+      "Vitamin E",
+      "Rose Extract"
+    ],
+    "image": "https://source.unsplash.com/640x640/?face-cream,skincare",
+    "product_link": "/feature-upcoming-display?product=Botanical%20Face%20Cream"
+  },
+  {
+    "id": 15,
+    "name": "Herbal Shine Shampoo",
+    "category": "Personal Care",
+    "overall_score": 87.0,
+    "rating": 4.4,
+    "eco_score": 83.0,
+    "safety_score": 89.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Leaves hair clean and soft without heavy residue."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Pleasant fragrance and good lather quality."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Feels gentle enough for regular use."
+      }
+    ],
+    "ingredients": [
+      "Aqua",
+      "Amla Extract",
+      "Reetha Extract",
+      "Shikakai",
+      "Coconut Oil"
+    ],
+    "image": "https://source.unsplash.com/640x640/?herbal-shampoo,hair-care",
+    "product_link": "/feature-upcoming-display?product=Herbal%20Shine%20Shampoo"
+  },
+  {
+    "id": 16,
+    "name": "PureWash Organic Soap Bar",
+    "category": "Personal Care",
+    "overall_score": 85.6,
+    "rating": 4.3,
+    "eco_score": 88.0,
+    "safety_score": 87.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Mild on skin and lasts longer than expected."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Nice natural scent and good lather."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "A clean-feeling soap bar for everyday bathing."
+      }
+    ],
+    "ingredients": [
+      "Coconut Oil",
+      "Olive Oil",
+      "Shea Butter",
+      "Lye",
+      "Lavender Oil"
+    ],
+    "image": "https://source.unsplash.com/640x640/?soap,organic,skincare",
+    "product_link": "/feature-upcoming-display?product=PureWash%20Organic%20Soap%20Bar"
+  },
+  {
+    "id": 17,
+    "name": "Herbal Mint Toothpaste",
+    "category": "Personal Care",
+    "overall_score": 84.8,
+    "rating": 4.2,
+    "eco_score": 79.0,
+    "safety_score": 88.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Fresh mint flavor and a clean mouthfeel."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Good daily toothpaste without overpowering taste."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Feels gentle while still leaving the teeth clean."
+      }
+    ],
+    "ingredients": [
+      "Calcium Carbonate",
+      "Peppermint Oil",
+      "Neem Extract",
+      "Fluoride",
+      "Xylitol"
+    ],
+    "image": "https://source.unsplash.com/640x640/?toothpaste,herbal,oral-care",
+    "product_link": "/feature-upcoming-display?product=Herbal%20Mint%20Toothpaste"
+  },
+  {
+    "id": 18,
+    "name": "EcoBamboo Toothbrush Set",
+    "category": "Personal Care",
+    "overall_score": 83.5,
+    "rating": 4.1,
+    "eco_score": 92.0,
+    "safety_score": 84.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Comfortable grip and the bristles are soft enough."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "A practical eco-conscious alternative to plastic brushes."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Good value pack for the family."
+      }
+    ],
+    "ingredients": [
+      "Bamboo Handle",
+      "Soft Nylon Bristles",
+      "Biodegradable Packaging"
+    ],
+    "image": "https://source.unsplash.com/640x640/?bamboo,toothbrush,eco-friendly",
+    "product_link": "/feature-upcoming-display?product=EcoBamboo%20Toothbrush%20Set"
+  },
+  {
+    "id": 19,
+    "name": "FreshGuard Aluminum-Free Deodorant",
+    "category": "Personal Care",
+    "overall_score": 83.9,
+    "rating": 4.2,
+    "eco_score": 78.0,
+    "safety_score": 89.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Light scent and comfortable for all-day wear."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "No harsh residue and works well on busy days."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "A good aluminum-free option for daily use."
+      }
+    ],
+    "ingredients": [
+      "Coconut Oil",
+      "Shea Butter",
+      "Arrowroot Powder",
+      "Baking Soda",
+      "Essential Oils"
+    ],
+    "image": "https://source.unsplash.com/640x640/?deodorant,natural,skincare",
+    "product_link": "/feature-upcoming-display?product=FreshGuard%20Aluminum-Free%20Deodorant"
+  },
+  {
+    "id": 20,
+    "name": "Herbal Hygiene Spray",
+    "category": "Personal Care",
+    "overall_score": 82.1,
+    "rating": 4.0,
+    "eco_score": 80.0,
+    "safety_score": 85.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Convenient for quick sanitation on the go."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Fresh herbal scent and compact bottle size."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Useful for travel and workplace hygiene."
+      }
+    ],
+    "ingredients": [
+      "Ethyl Alcohol",
+      "Aloe Vera",
+      "Tea Tree Oil",
+      "Glycerin"
+    ],
+    "image": "https://source.unsplash.com/640x640/?hygiene-spray,sanitizer",
+    "product_link": "/feature-upcoming-display?product=Herbal%20Hygiene%20Spray"
+  },
+  {
+    "id": 21,
+    "name": "GreenSpark Dishwashing Liquid",
+    "category": "Home & Garden",
+    "overall_score": 84.7,
+    "rating": 4.3,
+    "eco_score": 90.0,
+    "safety_score": 86.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Cuts grease well and has a pleasant mild scent."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "A little goes a long way during dishwashing."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Good eco-friendly choice for the kitchen."
+      }
+    ],
+    "ingredients": [
+      "Plant-Based Surfactants",
+      "Citrus Extract",
+      "Aqua",
+      "Salt"
+    ],
+    "image": "https://source.unsplash.com/640x640/?dishwashing-liquid,kitchen-cleaning",
+    "product_link": "/feature-upcoming-display?product=GreenSpark%20Dishwashing%20Liquid"
+  },
+  {
+    "id": 22,
+    "name": "BioWash Laundry Detergent",
+    "category": "Home & Garden",
+    "overall_score": 84.1,
+    "rating": 4.2,
+    "eco_score": 91.0,
+    "safety_score": 85.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Clothes come out clean without a strong chemical smell."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Works well in regular washing cycles and feels gentle."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "A good plant-based detergent for family laundry."
+      }
+    ],
+    "ingredients": [
+      "Plant Enzymes",
+      "Coconut Surfactants",
+      "Soda Ash",
+      "Lemon Extract"
+    ],
+    "image": "https://source.unsplash.com/640x640/?laundry-detergent,cleaning",
+    "product_link": "/feature-upcoming-display?product=BioWash%20Laundry%20Detergent"
+  },
+  {
+    "id": 23,
+    "name": "Herbal Floor Fresh Cleaner",
+    "category": "Home & Garden",
+    "overall_score": 83.2,
+    "rating": 4.1,
+    "eco_score": 87.0,
+    "safety_score": 84.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Leaves the floor clean and with a light natural scent."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Does not feel overly harsh while mopping."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Useful for daily cleaning in the home."
+      }
+    ],
+    "ingredients": [
+      "Water",
+      "Neem Extract",
+      "Eucalyptus Oil",
+      "Lemon Oil"
+    ],
+    "image": "https://source.unsplash.com/640x640/?floor-cleaner,home-cleaning",
+    "product_link": "/feature-upcoming-display?product=Herbal%20Floor%20Fresh%20Cleaner"
+  },
+  {
+    "id": 24,
+    "name": "SparkleSafe Toilet Cleaner",
+    "category": "Home & Garden",
+    "overall_score": 82.4,
+    "rating": 4.0,
+    "eco_score": 79.0,
+    "safety_score": 86.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Strong cleaning performance with a manageable scent."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Makes regular bathroom cleaning much easier."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Bottle design is convenient and easy to use."
+      }
+    ],
+    "ingredients": [
+      "Citric Acid",
+      "Plant-Based Solvent",
+      "Water",
+      "Fragrance"
+    ],
+    "image": "https://source.unsplash.com/640x640/?toilet-cleaner,bathroom-cleaning",
+    "product_link": "/feature-upcoming-display?product=SparkleSafe%20Toilet%20Cleaner"
+  },
+  {
+    "id": 25,
+    "name": "PureMist Multi-Purpose Spray",
+    "category": "Home & Garden",
+    "overall_score": 81.8,
+    "rating": 4.0,
+    "eco_score": 82.0,
+    "safety_score": 83.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Handy spray for counters, tables, and quick touch-ups."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Cleans well and has a fresh scent."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Good for daily maintenance cleaning around the house."
+      }
+    ],
+    "ingredients": [
+      "Water",
+      "Plant Extracts",
+      "Alcohol",
+      "Lemon Essence"
+    ],
+    "image": "https://source.unsplash.com/640x640/?multi-purpose-cleaner,spray",
+    "product_link": "/feature-upcoming-display?product=PureMist%20Multi-Purpose%20Spray"
+  },
+  {
+    "id": 26,
+    "name": "ClearView Glass Cleaner",
+    "category": "Home & Garden",
+    "overall_score": 81.2,
+    "rating": 3.9,
+    "eco_score": 80.0,
+    "safety_score": 84.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Leaves mirrors and windows streak-free after wiping."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Simple to use and effective for regular cleaning."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Nice everyday cleaner for glass surfaces."
+      }
+    ],
+    "ingredients": [
+      "Water",
+      "Isopropyl Alcohol",
+      "Vinegar",
+      "Fragrance"
+    ],
+    "image": "https://source.unsplash.com/640x640/?glass-cleaner,cleaning-spray",
+    "product_link": "/feature-upcoming-display?product=ClearView%20Glass%20Cleaner"
+  },
+  {
+    "id": 27,
+    "name": "Natural Shield Disinfectant",
+    "category": "Home & Garden",
+    "overall_score": 82.9,
+    "rating": 4.1,
+    "eco_score": 85.0,
+    "safety_score": 87.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Useful for sanitizing high-touch home surfaces."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Has a cleaner scent than many harsh disinfectants."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "A practical product for routine disinfection."
+      }
+    ],
+    "ingredients": [
+      "Ethyl Alcohol",
+      "Tea Tree Oil",
+      "Water",
+      "Hydrogen Peroxide"
+    ],
+    "image": "https://source.unsplash.com/640x640/?disinfectant,cleaning",
+    "product_link": "/feature-upcoming-display?product=Natural%20Shield%20Disinfectant"
+  },
+  {
+    "id": 28,
+    "name": "AromaLeaf Air Freshener",
+    "category": "Home & Garden",
+    "overall_score": 80.9,
+    "rating": 4.0,
+    "eco_score": 83.0,
+    "safety_score": 82.0,
+    "reviews": [
+      {
+        "author": "Anonymous",
+        "comment": "Fresh scent without feeling too strong indoors."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "The herbal note makes the room feel clean."
+      },
+      {
+        "author": "Anonymous",
+        "comment": "Nice option for a natural-smelling air freshener."
+      }
+    ],
+    "ingredients": [
+      "Essential Oil Blend",
+      "Water",
+      "Natural Solubilizer",
+      "Citrus Extract"
+    ],
+    "image": "https://source.unsplash.com/640x640/?air-freshener,essential-oil",
+    "product_link": "/feature-upcoming-display?product=AromaLeaf%20Air%20Freshener"
+  }
+]

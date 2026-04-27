@@ -8,6 +8,9 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 import functools
+from urllib.parse import quote_plus
+
+USD_TO_INR = 83.0
 
 app = Flask(
     __name__,
@@ -128,6 +131,31 @@ def generate_random_reviews():
     
     return reviews
 
+def generate_realistic_product_name(query, category, index):
+    brands = [
+        'Natura', 'PureLeaf', 'UrbanGlow', 'EcoNest', 'AquaBloom',
+        'VitalCraft', 'GlowMint', 'FreshRoot', 'EverCare', 'PrimeAura'
+    ]
+    descriptors = [
+        'Advanced', 'Herbal', 'Deep Clean', 'Daily Care', 'Ultra Fresh',
+        'Hydrating', 'Gentle', 'Premium', 'Active', 'Complete'
+    ]
+
+    default_by_category = {
+        'Electronics': 'Smart Device',
+        'Personal Care': 'Care Essentials',
+        'Home & Garden': 'Home Utility',
+        'Food & Beverage': 'Nutrition Pack',
+        'Fashion': 'Lifestyle Wear',
+    }
+
+    normalized_query = ' '.join(query.replace('-', ' ').replace('/', ' ').split()).strip()
+    base_name = normalized_query.title() if normalized_query else default_by_category.get(category, 'Product')
+
+    brand = brands[index % len(brands)]
+    descriptor = descriptors[index % len(descriptors)]
+    return f"{brand} {descriptor} {base_name}"
+
 # Mock data for demonstration
 def generate_mock_products(query, product_ids=None, num_products=10):
     categories = ['Electronics', 'Personal Care', 'Home & Garden', 'Food & Beverage', 'Fashion']
@@ -135,38 +163,338 @@ def generate_mock_products(query, product_ids=None, num_products=10):
     
     for i in range(num_products):
         ingredients = ["Water", "Natural Extracts", "Preservatives", "Essential Oils", "Organic Components"]
+        selected_category = random.choice(categories)
+        product_name = generate_realistic_product_name(query, selected_category, i)
         
         # Generate realistic reviews
         reviews = generate_random_reviews()
         
         product = Product(
             id=product_ids[i] if product_ids and i < len(product_ids) else i+1,
-            name=f"{query} Product {i+1}",
+            name=product_name,
             price=round(random.uniform(100, 2000), 2),
             rating=round(random.uniform(3, 5), 1),
             reviews=json.dumps(reviews),
             ingredients=json.dumps(random.sample(ingredients, k=random.randint(2, 5))),
             eco_score=round(random.uniform(50, 100), 1),
             safety_score=round(random.uniform(60, 100), 1),
-            category=random.choice(categories),
-            description=f"High-quality {query} designed for optimal performance and sustainability. Best choice for conscious consumers."
+            category=selected_category,
+            description=f"High-quality {product_name} designed for optimal performance and sustainability. Best choice for conscious consumers."
         )
         products.append(product)
     return products
 
+def get_product_field(product, field_name, default=None):
+    if isinstance(product, dict):
+        return product.get(field_name, default)
+    return getattr(product, field_name, default)
+
+def build_fallback_image_url(query, name='', category=''):
+    raw_text = ' '.join(part for part in [query, name, category] if part).lower().strip()
+    if not raw_text:
+        raw_text = 'shopping product'
+
+    stop_words = {
+        'product', 'products', 'item', 'items', 'best', 'quality', 'new',
+        'source', 'generated', 'data', 'general', 'and', 'for', 'with',
+        'the', 'a', 'an'
+    }
+
+    cleaned_tokens = []
+    for token in raw_text.replace('&', ' ').replace('-', ' ').replace('/', ' ').split():
+        cleaned_token = ''.join(character for character in token if character.isalnum())
+        if cleaned_token and cleaned_token not in stop_words:
+            cleaned_tokens.append(cleaned_token)
+
+    if not cleaned_tokens:
+        cleaned_tokens = ['shopping']
+
+    primary_terms = cleaned_tokens[:3]
+    image_label = ' '.join(primary_terms).title()
+
+    # DummyImage reliably returns an image and keeps it relevant by embedding the product terms.
+    return f'https://dummyimage.com/640x640/e8f1ff/0f172a.png&text={quote_plus(image_label)}'
+
+def build_search_variants(query):
+    normalized_query = ' '.join(query.lower().replace('-', ' ').replace('/', ' ').split())
+    if not normalized_query:
+        return []
+
+    variants = []
+    seen = set()
+
+    def add_variant(value):
+        cleaned_value = ' '.join(value.split()).strip()
+        if cleaned_value and cleaned_value not in seen:
+            seen.add(cleaned_value)
+            variants.append(cleaned_value)
+
+    add_variant(normalized_query)
+
+    tokens = [token for token in normalized_query.split() if len(token) > 1]
+    if tokens:
+        add_variant(' '.join(tokens))
+        add_variant(tokens[0])
+        add_variant(tokens[-1])
+
+    if len(tokens) > 2:
+        add_variant(' '.join(tokens[:-1]))
+        add_variant(' '.join(tokens[1:]))
+
+    if 'facewash' in normalized_query:
+        add_variant(normalized_query.replace('facewash', 'face wash'))
+        add_variant(normalized_query.replace('face wash', 'facewash'))
+        add_variant('facial wash')
+        add_variant('face cleanser')
+
+    if 'shampoo' in normalized_query:
+        add_variant(normalized_query.replace('shampoo', 'hair shampoo'))
+
+    if 'cream' in normalized_query:
+        add_variant(normalized_query.replace('cream', 'face cream'))
+
+    return variants
+
+def ensure_list(value, default=None):
+    if default is None:
+        default = []
+    if isinstance(value, list):
+        return value
+    if isinstance(value, str):
+        try:
+            parsed_value = json.loads(value)
+            if isinstance(parsed_value, list):
+                return parsed_value
+        except json.JSONDecodeError:
+            pass
+    return default
+
+def serialize_product_for_session(product):
+    return {
+        'id': get_product_field(product, 'id'),
+        'name': get_product_field(product, 'name', ''),
+        'price': float(get_product_field(product, 'price', 0) or 0),
+        'rating': float(get_product_field(product, 'rating', 0) or 0),
+        'reviews': ensure_list(get_product_field(product, 'reviews', []), []),
+        'ingredients': ensure_list(get_product_field(product, 'ingredients', []), []),
+        'eco_score': float(get_product_field(product, 'eco_score', 0) or 0),
+        'safety_score': float(get_product_field(product, 'safety_score', 0) or 0),
+        'category': get_product_field(product, 'category', 'General'),
+        'description': get_product_field(product, 'description', ''),
+        'source': get_product_field(product, 'source', 'Generated Mock Data'),
+        'source_url': get_product_field(product, 'source_url', ''),
+        'image_url': get_product_field(product, 'image_url', ''),
+        'unified_score': float(get_product_field(product, 'unified_score', 0) or 0),
+    }
+
+def normalize_external_product(raw_product, source_name, index):
+    raw_id = raw_product.get('id', index + 1)
+    try:
+        raw_id = int(raw_id)
+    except (TypeError, ValueError):
+        raw_id = index + 1
+
+    source_offsets = {
+        'DummyJSON': 100000,
+        'FakeStoreAPI': 200000,
+    }
+    product_id = source_offsets.get(source_name, 300000) + raw_id
+
+    reviews = raw_product.get('reviews')
+    if isinstance(reviews, list) and reviews:
+        normalized_reviews = reviews
+    elif isinstance(reviews, str) and reviews.strip():
+        try:
+            parsed_reviews = json.loads(reviews)
+            normalized_reviews = parsed_reviews if isinstance(parsed_reviews, list) else generate_random_reviews()
+        except json.JSONDecodeError:
+            normalized_reviews = generate_random_reviews()
+    else:
+        normalized_reviews = generate_random_reviews()
+
+    ingredients = raw_product.get('ingredients')
+    if not isinstance(ingredients, list) or not ingredients:
+        ingredients = random.sample(
+            ['Water', 'Natural Extracts', 'Preservatives', 'Essential Oils', 'Organic Components'],
+            k=random.randint(2, 5)
+        )
+
+    description = raw_product.get('description') or f'Product sourced from {source_name}. '
+    brand = raw_product.get('brand') or source_name
+    category = raw_product.get('category') or 'General'
+    price_value = float(raw_product.get('price') or 0)
+
+    if source_name in {'DummyJSON', 'FakeStoreAPI'}:
+        price_value = round(price_value * USD_TO_INR, 2)
+
+    image_url = raw_product.get('thumbnail') or raw_product.get('image')
+    if isinstance(raw_product.get('images'), list) and raw_product['images']:
+        image_url = image_url or raw_product['images'][0]
+    if not image_url:
+        image_url = build_fallback_image_url(
+            raw_product.get('search_query', ''),
+            raw_product.get('title') or raw_product.get('name') or brand,
+            category,
+        )
+
+    return {
+        'id': product_id,
+        'name': raw_product.get('title') or raw_product.get('name') or f'{brand} Product',
+        'price': price_value,
+        'rating': round(float(raw_product.get('rating') or 0), 1),
+        'reviews': normalized_reviews,
+        'ingredients': ingredients,
+        'eco_score': round(float(raw_product.get('eco_score') or random.uniform(50, 100)), 1),
+        'safety_score': round(float(raw_product.get('safety_score') or random.uniform(60, 100)), 1),
+        'category': category,
+        'description': description,
+        'source': source_name,
+        'source_url': raw_product.get('source_url') or raw_product.get('product_url') or '',
+        'image_url': image_url or '',
+    }
+
+def fetch_dummyjson_products(query, limit=6):
+    normalized_products = []
+    seen_ids = set()
+
+    for search_query in build_search_variants(query):
+        response = requests.get(
+            'https://dummyjson.com/products/search',
+            params={'q': search_query, 'limit': limit},
+            timeout=8,
+        )
+        response.raise_for_status()
+        payload = response.json()
+        products = payload.get('products', [])[:limit]
+
+        for index, raw_product in enumerate(products):
+            unique_id = raw_product.get('id')
+            if unique_id in seen_ids:
+                continue
+            seen_ids.add(unique_id)
+            normalized_product = normalize_external_product(
+                {
+                    'id': raw_product.get('id'),
+                    'title': raw_product.get('title'),
+                    'price': raw_product.get('price'),
+                    'rating': raw_product.get('rating'),
+                    'description': raw_product.get('description'),
+                    'brand': raw_product.get('brand'),
+                    'category': raw_product.get('category'),
+                    'thumbnail': raw_product.get('thumbnail'),
+                    'images': raw_product.get('images', []),
+                    'source_url': f"https://dummyjson.com/products/{raw_product.get('id')}",
+                },
+                'DummyJSON',
+                index,
+            )
+            normalized_products.append(normalized_product)
+
+            if len(normalized_products) >= limit:
+                return normalized_products
+
+    return normalized_products
+
+def fetch_fakestoreapi_products(query, limit=6):
+    response = requests.get('https://fakestoreapi.com/products', timeout=8)
+    response.raise_for_status()
+    payload = response.json()
+    search_variants = build_search_variants(query)
+
+    matching_products = []
+    for raw_product in payload:
+        searchable_text = ' '.join([
+            str(raw_product.get('title', '')),
+            str(raw_product.get('description', '')),
+            str(raw_product.get('category', '')),
+        ]).lower()
+        if search_variants and not any(variant in searchable_text for variant in search_variants):
+            continue
+
+        matching_products.append(normalize_external_product(
+            {
+                'id': raw_product.get('id'),
+                'title': raw_product.get('title'),
+                'price': raw_product.get('price'),
+                'rating': raw_product.get('rating', {}).get('rate', 0),
+                'description': raw_product.get('description'),
+                'category': raw_product.get('category'),
+                'image': raw_product.get('image'),
+                'source_url': f"https://fakestoreapi.com/products/{raw_product.get('id')}",
+            },
+            'FakeStoreAPI',
+            len(matching_products),
+        ))
+
+        if len(matching_products) >= limit:
+            break
+
+    return matching_products
+
+def fetch_ecommerce_products(query, limit=10):
+    all_products = []
+
+    try:
+        all_products.extend(fetch_dummyjson_products(query, limit=limit // 2 or 1))
+    except requests.RequestException:
+        pass
+
+    try:
+        all_products.extend(fetch_fakestoreapi_products(query, limit=limit // 2 or 1))
+    except requests.RequestException:
+        pass
+
+    if not all_products:
+        fallback_products = generate_mock_products(query, num_products=limit)
+        for fallback_product in fallback_products:
+            all_products.append({
+                'id': fallback_product.id,
+                'name': fallback_product.name,
+                'price': fallback_product.price,
+                'rating': fallback_product.rating,
+                'reviews': json.loads(fallback_product.reviews),
+                'ingredients': json.loads(fallback_product.ingredients),
+                'eco_score': fallback_product.eco_score,
+                'safety_score': fallback_product.safety_score,
+                'category': fallback_product.category,
+                'description': fallback_product.description,
+                'source': 'Generated Mock Data',
+                'source_url': '',
+                'image_url': build_fallback_image_url(query, fallback_product.name, fallback_product.category),
+            })
+
+    unique_products = []
+    seen_names = set()
+    for product in all_products:
+        product_name = get_product_field(product, 'name', '').strip().lower()
+        if product_name in seen_names:
+            continue
+        seen_names.add(product_name)
+        unique_products.append(product)
+
+    return unique_products[:limit]
+
 def calculate_unified_score(product, weights=None):
     if weights is None:
         weights = {'cost': 0.2, 'quality': 0.3, 'safety': 0.2, 'eco': 0.3}
+
+    price = float(get_product_field(product, 'price', 0) or 0)
+    rating = float(get_product_field(product, 'rating', 0) or 0)
+    safety_score = float(get_product_field(product, 'safety_score', 0) or 0)
+    eco_score = float(get_product_field(product, 'eco_score', 0) or 0)
+    reviews = get_product_field(product, 'reviews', [])
+    if isinstance(reviews, str):
+        try:
+            reviews = json.loads(reviews)
+        except json.JSONDecodeError:
+            reviews = []
     
     # Cost-efficiency: lower price is better, normalize
-    cost_score = max(0, 100 - (product.price / 2000) * 100)
+    cost_score = max(0, 100 - (price / 2000) * 100)
     
     # Quality: rating * sentiment
-    sentiment = sia.polarity_scores(' '.join(json.loads(product.reviews)))['compound']
-    quality_score = (product.rating / 5) * 50 + (sentiment + 1) * 25
-    
-    safety_score = product.safety_score
-    eco_score = product.eco_score
+    sentiment = sia.polarity_scores(' '.join(reviews))['compound'] if reviews else 0
+    quality_score = (rating / 5) * 50 + (sentiment + 1) * 25
     
     unified = (weights['cost'] * cost_score + 
                weights['quality'] * quality_score + 
@@ -433,36 +761,48 @@ def search():
     sort_by = request.args.get('sort_by', 'unified')
     category = request.args.get('category', '')
     
-    # In real app, fetch from APIs; here using mock
-    products = generate_mock_products(query)
+    # Fetch products from external ecommerce APIs first, then fall back to mock data.
+    products = fetch_ecommerce_products(query)
     
     # Calculate scores
     for p in products:
-        p.unified_score = calculate_unified_score(p)
+        if isinstance(p, dict):
+            p['unified_score'] = calculate_unified_score(p)
+        else:
+            p.unified_score = calculate_unified_score(p)
     
     # Apply filters
     filtered_products = []
     for p in products:
-        if (min_price <= p.price <= max_price and 
-            p.rating >= min_rating and 
-            p.eco_score >= min_eco and
-            (not category or p.category == category)):
+        price = get_product_field(p, 'price', 0)
+        rating = get_product_field(p, 'rating', 0)
+        eco_score = get_product_field(p, 'eco_score', 0)
+        product_category = get_product_field(p, 'category', '')
+
+        if (min_price <= price <= max_price and 
+            rating >= min_rating and 
+            eco_score >= min_eco and
+            (not category or product_category == category)):
             filtered_products.append(p)
     
     # Apply sorting
     if sort_by == 'price_low':
-        filtered_products.sort(key=lambda x: x.price)
+        filtered_products.sort(key=lambda x: get_product_field(x, 'price', 0))
     elif sort_by == 'price_high':
-        filtered_products.sort(key=lambda x: x.price, reverse=True)
+        filtered_products.sort(key=lambda x: get_product_field(x, 'price', 0), reverse=True)
     elif sort_by == 'rating':
-        filtered_products.sort(key=lambda x: x.rating, reverse=True)
+        filtered_products.sort(key=lambda x: get_product_field(x, 'rating', 0), reverse=True)
     elif sort_by == 'eco':
-        filtered_products.sort(key=lambda x: x.eco_score, reverse=True)
+        filtered_products.sort(key=lambda x: get_product_field(x, 'eco_score', 0), reverse=True)
     else:  # unified
-        filtered_products.sort(key=lambda x: x.unified_score, reverse=True)
+        filtered_products.sort(key=lambda x: get_product_field(x, 'unified_score', 0), reverse=True)
     
     # Get unique categories for filter
-    categories = sorted(list(set(p.category for p in products)))
+    categories = sorted(list(set(get_product_field(p, 'category', 'General') for p in products)))
+
+    session['last_search_products'] = [serialize_product_for_session(product) for product in filtered_products]
+    session['last_search_query'] = query
+    session.modified = True
     
     return render_template('results.html', 
                          products=filtered_products, 
@@ -487,18 +827,24 @@ def compare():
 
     if len(ids) < 2:
         return render_template('compare.html', products=[])
-    
-    # Get the query from form to generate products with same context
-    query = request.form.get('query', 'Product')
-    
-    # Generate products for comparison with proper IDs
-    products = generate_mock_products(query, product_ids=ids, num_products=len(ids))
-    
-    # Calculate unified scores
-    for p in products:
-        p.unified_score = calculate_unified_score(p)
-    
-    return render_template('compare.html', products=products)
+
+    stored_products = session.get('last_search_products', [])
+    if stored_products:
+        selected_products = [product for product in stored_products if product.get('id') in ids]
+    else:
+        selected_products = []
+
+    if len(selected_products) < 2:
+        query = request.form.get('query', 'Product')
+        fallback_products = generate_mock_products(query, product_ids=ids, num_products=len(ids))
+        selected_products = [serialize_product_for_session(product) for product in fallback_products]
+
+    for product in selected_products:
+        product['reviews'] = ensure_list(product.get('reviews', []))
+        product['ingredients'] = ensure_list(product.get('ingredients', []))
+        product['unified_score'] = calculate_unified_score(product)
+
+    return render_template('compare.html', products=selected_products)
 
 @app.route('/favorites')
 def view_favorites():
@@ -513,6 +859,11 @@ def view_favorites():
         p.unified_score = calculate_unified_score(p)
     
     return render_template('favorites.html', products=products, message="")
+
+@app.route('/feature-upcoming-display')
+def feature_upcoming_display():
+    product_name = request.args.get('product', 'Selected Product')
+    return render_template('feature_upcoming_display.html', product_name=product_name)
 
 if __name__ == '__main__':
     with app.app_context():
