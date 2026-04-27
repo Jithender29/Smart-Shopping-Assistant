@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorites - Smart Shopping Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>❤️ My Favorite Products</h1>
+        <p>Products you've saved for later</p>
+        <div class="header-controls">
+            <a href="/" class="back-link">← Back to Search</a>
+            {% if session.get('username') %}
+            <span style="color: white; font-weight: 600;">👤 {{ session.get('username') }}</span>
+            <a href="/logout" style="color: white; text-decoration: none; font-weight: 600;">🚪 Logout</a>
+            {% else %}
+            <a href="/login" style="color: white; text-decoration: none; font-weight: 600;">🔐 Login</a>
+            {% endif %}
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+        </div>
+    </header>
+
+    <main>
+        {% if products %}
+        <div style="margin-bottom: 2rem;">
+            <p class="results-count">📌 {{ products|length }} favorite(s) saved</p>
+        </div>
+
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product">
+                <div class="product-header">
+                    <h3 class="product-title">{{ product.name }}</h3>
+                    <button class="favorite-btn active" onclick="removeFavorite({{ product.id }}, this)" id="fav-{{ product.id }}">♥</button>
+                </div>
+                
+                <div class="product-content">
+                    <p class="product-price">₹{{ "%.2f"|format(product.price) }}</p>
+                    
+                    {% if product.description %}
+                    <p style="color: #6b7280; font-size: 0.9rem; margin: 0.5rem 0;">{{ product.description }}</p>
+                    {% endif %}
+                    
+                    <span class="badge badge-eco">{{ product.category }}</span>
+                    
+                    <!-- Scores Section -->
+                    <div class="score-container">
+                        <!-- Unified Score -->
+                        <div class="score-row">
+                            <label class="score-label">Overall Score</label>
+                            <span class="score-value" style="color: #8b5cf6;">{{ "%.1f"|format(product.unified_score) }}/100</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill unified" style="width: {{ product.unified_score }}%"></div>
+                        </div>
+                        
+                        <!-- Rating -->
+                        <div class="score-row" style="margin-top: 1rem;">
+                            <label class="score-label">Rating</label>
+                            <span class="score-value">⭐ {{ "%.1f"|format(product.rating) }}/5</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill quality" style="width: {{ (product.rating / 5) * 100 }}%"></div>
+                        </div>
+                        
+                        <!-- Eco Score -->
+                        <div class="score-row" style="margin-top: 1rem;">
+                            <label class="score-label">Eco Score</label>
+                            <span class="score-value" style="color: #10b981;">{{ "%.1f"|format(product.eco_score) }}/100</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill eco" style="width: {{ product.eco_score }}%"></div>
+                        </div>
+                        
+                        <!-- Safety Score -->
+                        <div class="score-row" style="margin-top: 1rem;">
+                            <label class="score-label">Safety Score</label>
+                            <span class="score-value" style="color: #f59e0b;">{{ "%.1f"|format(product.safety_score) }}/100</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill safety" style="width: {{ product.safety_score }}%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Details Section -->
+                    <div class="product-details">
+                        <details>
+                            <summary>📝 Reviews ({{ product.reviews|length }})</summary>
+                            <ul>
+                                {% for review in product.reviews %}
+                                <li>{{ review }}</li>
+                                {% endfor %}
+                            </ul>
+                        </details>
+                        
+                        <details>
+                            <summary>🧪 Ingredients ({{ product.ingredients|length }})</summary>
+                            <ul>
+                                {% for ing in product.ingredients %}
+                                <li>{{ ing }}</li>
+                                {% endfor %}
+                            </ul>
+                        </details>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="/" style="display: inline-block; background: var(--primary-color); color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 8px; font-weight: 600;">🔍 Search for More Products</a>
+        </div>
+
+        {% else %}
+        <div style="text-align: center; padding: 3rem; background: white; border-radius: 12px;">
+            <h3 style="font-size: 1.5rem; color: #6b7280;">{{ message }}</h3>
+            <p style="color: #9ca3af;">Start adding products to your favorites to save them for later!</p>
+            <a href="/" style="display: inline-block; background: var(--primary-color); color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 8px; font-weight: 600; margin-top: 1rem;">🔍 Search Products</a>
+        </div>
+        {% endif %}
+    </main>
+
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', body.classList.contains('dark-mode'));
+        }
+
+        function removeFavorite(productId, element) {
+            fetch(`/api/favorites/${productId}`, { method: 'DELETE' })
+                .then(r => r.json())
+                .then(data => {
+                    element.parentElement.parentElement.parentElement.style.opacity = '0.5';
+                    setTimeout(() => {
+                        location.reload();
+                    }, 300);
+                });
+        }
+
+        // Load dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</body>
+</html>
