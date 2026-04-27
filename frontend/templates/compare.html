@@ -104,6 +104,7 @@
                         <td><strong>🧪 Ingredients</strong></td>
                         {% for product in products %}
                         <td>
+                            {% if product.ingredients and product.ingredients|length > 0 %}
                             <ul style="margin: 0; padding-left: 1.5rem;">
                                 {% for ing in product.ingredients[:3] %}
                                 <li>{{ ing }}</li>
@@ -112,6 +113,15 @@
                                 <li><em>... and {{ product.ingredients|length - 3 }} more</em></li>
                                 {% endif %}
                             </ul>
+                            {% else %}
+                            <span style="color: #6b7280;">Not provided by source</span>
+                            {% endif %}
+
+                            <div style="margin-top: 0.75rem;">
+                                <a href="{{ url_for('feature_upcoming_display', product=product.name) }}" style="display: inline-block; background: var(--primary-color); color: white; padding: 0.5rem 0.9rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                                    View Product Page
+                                </a>
+                            </div>
                         </td>
                         {% endfor %}
                     </tr>

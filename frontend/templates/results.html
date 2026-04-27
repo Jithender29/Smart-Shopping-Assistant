@@ -101,6 +101,16 @@
             {% if products %}
                 {% for product in products %}
                 <div class="product">
+                    {% if product.image_url %}
+                    <div style="width: 100%; height: 220px; overflow: hidden; border-radius: 12px 12px 0 0; background: #f3f4f6; display: flex; align-items: center; justify-content: center;">
+                        <img src="{{ product.image_url }}" alt="{{ product.name }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null;this.src='https://dummyimage.com/640x640/e8f1ff/0f172a.png&text={{ product.name|urlencode }}';">
+                    </div>
+                    {% else %}
+                    <div style="width: 100%; height: 220px; border-radius: 12px 12px 0 0; background: linear-gradient(135deg, #e5e7eb, #f9fafb); display: flex; align-items: center; justify-content: center; color: #6b7280; font-weight: 600;">
+                        No image available
+                    </div>
+                    {% endif %}
+
                     <div class="product-header">
                         <h3 class="product-title">{{ product.name }}</h3>
                         <button class="favorite-btn" onclick="toggleFavorite({{ product.id }}, this)" id="fav-{{ product.id }}">♡</button>
@@ -112,9 +122,7 @@
                         {% if product.description %}
                         <p style="color: #6b7280; font-size: 0.9rem; margin: 0.5rem 0;">{{ product.description }}</p>
                         {% endif %}
-                        
-                        <span class="badge badge-eco">{{ product.category }}</span>
-                        
+
                         <!-- Scores Section -->
                         <div class="score-container">
                             <!-- Unified Score -->
@@ -173,6 +181,11 @@
                                     {% endfor %}
                                 </ul>
                             </details>
+                            <div style="margin-top: 0.85rem;">
+                                <a href="{{ url_for('feature_upcoming_display', product=product.name) }}" style="display: inline-block; background: var(--primary-color); color: white; padding: 0.55rem 0.95rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                                    View Product Page
+                                </a>
+                            </div>
                         </div>
                         
                         <!-- Compare Checkbox -->
